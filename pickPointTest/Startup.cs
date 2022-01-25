@@ -14,6 +14,7 @@ using pickPointTest.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using pickPointTest.Options;
+using pickPointTest.Services;
 
 namespace pickPointTest
 {
@@ -42,6 +43,8 @@ namespace pickPointTest
                 x.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info { Title = "pickPointTest API", Version = "v1" });
 
             });
+            services.AddScoped<IPostamatService, PostamatService>();
+            services.AddScoped<IOrderService, OrderService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -70,12 +73,7 @@ namespace pickPointTest
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
+            app.UseMvc();
         }
     }
 }
